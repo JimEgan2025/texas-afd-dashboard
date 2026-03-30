@@ -3,43 +3,31 @@ name: Deploy Texas AFD Dashboard
 on:
   workflow_dispatch:
   push:
-    branches:
-      - main
+    branches: ['main']
+    paths:
+      - 'generate-report.js'
+      - 'package.json'
+      - '.github/workflows/deploy.yml'
 
 permissions:
   contents: read
   pages: write
   id-token: write
 
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
-
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: "20"
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Generate report
-        run: node generate-report.js
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run build  # Assumes your build script outputs to /dist or similar
+      - uses: actions/upload-pages-artifact@v3
         with:
-          path: ./output
+          path: ./dist  # Adjust to your output dir
 
   deploy:
     needs: build
