@@ -1,8 +1,14 @@
 {
   "name": "texas-afd-dashboard",
   "version": "1.0.0",
-  "description": "Texas NWS AFD Key Messages aggregator",
+  "description": "Texas NWS AFD Key Messages Report",
   "main": "generate-report.js",
-  "scripts": { "start": "node generate-report.js" },
-  "dependencies": { "node-fetch": "^3.3.2", "cheerio": "^1.0.0-rc.12", "fs-extra": "^11.2.0" }
+  "scripts": {
+    "start": "node generate-report.js"
+  },
+  "dependencies": {
+    "node-fetch": "^3.3.2",
+    "cheerio": "^1.0.0-rc.12",
+    "fs-extra": "^11.2.0"
+  }
 }
